@@ -24,6 +24,12 @@ ext {
 	}
 }
 
+repositories {
+    mavenLocal()// 先从本地仓库中找。
+	maven { url 'https://maven.aliyun.com/repository/public/' }
+    mavenCentral()
+}
+
 configure(allprojects) { project ->
 	group = "org.springframework"
 	version = qualifyVersionIfNecessary(version)
@@ -467,10 +473,11 @@ project("spring-context") {
 	dependencies {
 		compile(project(":spring-aop"))
 		compile(project(":spring-beans"))
+		compile(project(":spring-beans-groovy"))
 		compile(project(":spring-core"))
 		compile(project(":spring-expression"))
 		compile(files(project(":spring-core").cglibRepackJar))
-		optional(project(":spring-instrument"))
+		compile(project(":spring-instrument"))
 		optional("javax.inject:javax.inject:1")
 		optional("javax.ejb:ejb-api:${ejbVersion}")
 		optional("javax.enterprise.concurrent:javax.enterprise.concurrent-api:1.0")
